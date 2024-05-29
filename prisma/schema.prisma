@@ -25,7 +25,7 @@ model User {
   deleted_at DateTime?
   is_deleted Boolean   @default(false)
 
-  role   Role?    @default(BUYER)
+  role   String   @default("BUYER")
   rating Rating[]
 
   @@map("users")
@@ -107,9 +107,4 @@ model Rules {
   propertyId Int
 
   @@map("rules")
-}
-
-enum Role {
-  BUYER
-  SELLER
 }

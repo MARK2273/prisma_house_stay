@@ -1,13 +1,15 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
+import { postT } from "../types/postType";
 
 const prisma = new PrismaClient();
 
 // Create a post
 export const createPost = async (req: Request, res: Response) => {
   try {
+    const postData: postT = req.body;
     await prisma.post.create({
-      data: req.body,
+      data: postData,
     });
     res.send("Post inserted successfully");
   } catch (err: any) {
@@ -15,19 +17,12 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
-// {
-//   "propertyId": 1,
-//   "title": "Beautiful House for Sale",
-//   "price": 250000,
-//   "description": "A spacious and well-maintained house located in a peaceful neighborhood. It features 3 bedrooms, 2 bathrooms, a modern kitchen, and a backyard garden.",
-//   "capacity": 6
-// }
-
-// Create many posts
 export const createManyPosts = async (req: Request, res: Response) => {
   try {
+    const postData: postT[] = req.body;
+
     await prisma.post.createMany({
-      data: [...req.body],
+      data: postData,
     });
     res.send("Posts inserted successfully");
   } catch (err: any) {
@@ -35,93 +30,48 @@ export const createManyPosts = async (req: Request, res: Response) => {
   }
 };
 
-// [
-//   {
-//     propertyId: 3,
-//     title: "Beautiful House for Sale",
-//     price: 250000,
-//     description:
-//       "A spacious and well-maintained house located in a peaceful neighborhood. It features 3 bedrooms, 2 bathrooms, a modern kitchen, and a backyard garden.",
-//     capacity: 6,
-//   },
-//   {
-//     propertyId: 2,
-//     title: "Luxury Apartment with City View",
-//     price: 350000,
-//     description:
-//       "A luxurious apartment located in the heart of the city. It offers stunning views of the skyline and comes fully furnished with top-of-the-line amenities.",
-//     capacity: 4,
-//   },
-// ];
-
 // Update a post
 export const updatePost = async (req: Request, res: Response) => {
   try {
-    await prisma.post.update({
-      where: { id: Number(req.params.id) },
-      data: req.body,
+    const validPost = await prisma.post.findFirst({
+      where: {
+        id: Number(req.params.id),
+      },
     });
-    res.send("Post updated successfully");
+    if (validPost !== null) {
+      await prisma.post.update({
+        where: { id: Number(req.params.id) },
+        data: req.body,
+      });
+      res.send("Post updated successfully");
+    } else {
+      res.send("Post Not Found!!!");
+    }
   } catch (err: any) {
     res.status(500).send("Something went wrong: " + err.message);
   }
 };
 
-// {
-//   "propertyId": 1,
-//   "title": "Updated House for Sale",
-//   "price": 280000,
-//   "description": "An updated description of the property.",
-//   "capacity": 8
-// }
-
-// Update many posts
-export const updateManyPosts = async (req: Request, res: Response) => {
-  const { where, data } = req.body;
-  if (!where || !data) {
-    return res.status(400).send("Missing 'where' or 'data' in request body");
-  }
-
+// Delete a post
+export const deletePost = async (req: Request, res: Response) => {
   try {
-    const result = await prisma.post.updateMany({
-      where,
-      data,
+    const validPost = await prisma.post.findFirst({
+      where: {
+        id: Number(req.params.id),
+      },
     });
-    res.send(`Posts updated successfully: ${result.count} records affected`);
+    if (validPost !== null) {
+      await prisma.post.delete({
+        where: { id: Number(req.params.id) },
+      });
+      res.send("Post deleted successfully");
+    } else {
+      res.send("Post Not Found!!!");
+    }
   } catch (err: any) {
     res.status(500).send("Something went wrong: " + err.message);
   }
 };
-
-// {
-//   "where": {
-//     "propertyId": 1
-//   },
-//   "data": {
-//     "price": 300000
-//   }
-// }
-
-// Find first post
-export const findFirstPost = async (req: Request, res: Response) => {
-  const { where } = req.body;
-  if (!where) {
-    return res.status(400).send("Missing 'where' in request body");
-  }
-
-  try {
-    const post = await prisma.post.findFirst({ where });
-    res.json(post);
-  } catch (err: any) {
-    res.status(500).send("Something went wrong: " + err.message);
-  }
-};
-
-// {
-//   "where": {
-//     "propertyId": 1
-//   }
-// }
 
 // Find many posts
 export const findManyPosts = async (req: Request, res: Response) => {
@@ -138,13 +88,38 @@ export const findManyPosts = async (req: Request, res: Response) => {
   }
 };
 
-// {
-//   "where": {
-//     "price": {
-//       "gte": 300000
-//     }
-//   }
-// }
+// Update many posts
+export const updateManyPosts = async (req: Request, res: Response) => {
+  const { where, data } = req.body;
+  if (!where || !data) {
+    return res.status(400).send("Missing 'where' or 'data' in request body");
+  }
+
+  try {
+    const result: Prisma.BatchPayload = await prisma.post.updateMany({
+      where,
+      data,
+    });
+    res.send(`Posts updated successfully: ${result.count} records affected`);
+  } catch (err: any) {
+    res.status(500).send("Something went wrong: " + err.message);
+  }
+};
+
+// Find first post
+export const findFirstPost = async (req: Request, res: Response) => {
+  const { where } = req.body;
+  if (!where) {
+    return res.status(400).send("Missing 'where' in request body");
+  }
+
+  try {
+    const post = await prisma.post.findFirst({ where });
+    res.json(post);
+  } catch (err: any) {
+    res.status(500).send("Something went wrong: " + err.message);
+  }
+};
 
 // Find unique post
 export const findUniquePost = async (req: Request, res: Response) => {
@@ -161,8 +136,51 @@ export const findUniquePost = async (req: Request, res: Response) => {
   }
 };
 
-// {
-//   "where": {
-//     "title": "Beautiful House for Sale"
-//   }
-// }
+// Render the create post form
+export const renderCreatePost = (req: Request, res: Response) => {
+  res.render("create_post", { title: "Create Post" });
+};
+
+// Render the update post form
+export const renderUpdatePost = async (req: Request, res: Response) => {
+  const postId = Number(req.params.id);
+  try {
+    const post = await prisma.post.findUnique({ where: { id: postId } });
+    res.render("update_post", { title: "Update Post", post });
+  } catch (err: any) {
+    res.status(500).send("Something went wrong: " + err.message);
+  }
+};
+
+// Render the first post based on the given criteria
+export const renderFindFirstPost = async (req: Request, res: Response) => {
+  const { where } = req.body;
+  try {
+    const post = await prisma.post.findFirst({ where });
+    res.render("first_post", { title: "First Post", post });
+  } catch (err: any) {
+    res.status(500).send("Something went wrong: " + err.message);
+  }
+};
+
+// Render multiple posts based on the given criteria
+export const renderFindManyPosts = async (req: Request, res: Response) => {
+  const { where } = req.body;
+  try {
+    const posts = await prisma.post.findMany({ where });
+    res.render("many_posts", { title: "Many Posts", posts });
+  } catch (err: any) {
+    res.status(500).send("Something went wrong: " + err.message);
+  }
+};
+
+// Render a unique post based on the given criteria
+export const renderFindUniquePost = async (req: Request, res: Response) => {
+  const { where } = req.body;
+  try {
+    const post = await prisma.post.findUnique({ where });
+    res.render("unique_post", { title: "Unique Post", post });
+  } catch (err: any) {
+    res.status(500).send("Something went wrong: " + err.message);
+  }
+};

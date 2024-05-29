@@ -7,6 +7,12 @@ import {
   findFirstUser,
   findManyUser,
   findUniqueUser,
+  UserUpsert,
+  renderCreateUser,
+  renderUpdateUser,
+  renderFindFirstUser,
+  renderFindManyUsers,
+  renderFindUniqueUser,
 } from "../controllers/userControllers";
 
 import {
@@ -17,6 +23,12 @@ import {
   findFirstProperty,
   findManyProperties,
   findUniqueProperty,
+  deleteProperty,
+  renderCreateProperty,
+  renderUpdateProperty,
+  renderFindFirstProperty,
+  renderFindManyProperties,
+  renderFindUniqueProperty,
 } from "../controllers/propertyControllers";
 
 import {
@@ -27,58 +39,102 @@ import {
   findFirstPost,
   findManyPosts,
   findUniquePost,
+  renderCreatePost,
+  renderUpdatePost,
+  renderFindFirstPost,
+  renderFindManyPosts,
+  renderFindUniquePost,
 } from "../controllers/postControllers";
 
 import {
   createRating,
   updateRating,
   deleteRating,
+  findManyRatings,
+  renderCreateRating,
+  renderUpdateRating,
 } from "../controllers/ratingControllers";
 
 import {
   createRule,
   updateRule,
   deleteRule,
+  findManyRules,
+  renderCreateRule,
+  renderUpdateRule,
 } from "../controllers/ruleControllers";
 
-import { createUserValidate } from "../middlewares/userValidators";
+import {
+  createUserValidate,
+  updateUserValidate,
+} from "../middlewares/userValidators";
+import {
+  createPropertyValidate,
+  updatePropertyValidate,
+} from "../middlewares/propertyValidators";
+import {
+  createPostValidate,
+  updatePostValidate,
+} from "../middlewares/postValidators";
+import {
+  createRatingValidate,
+  updateRatingValidate,
+} from "../middlewares/ratingValidators";
+import {
+  createRuleValidate,
+  updateRuleValidate,
+} from "../middlewares/ruleValidators";
 
 const router = express();
 
-//user
-router.post("/createuser", createUserValidate, createUser);
-router.post("/createmanyuser", createManyUser);
-router.post("/updateuser/:id", createUserValidate, updateUser);
-router.post("/updatemanyuser", updateManyUser);
-router.post("/findfirstuser", findFirstUser);
-router.post("/findmanyuser", findManyUser);
-router.post("/finduniqueuser", findUniqueUser);
+// User Routes
+router.get("/users/create", renderCreateUser);
+router.post("/users/create", createUserValidate, createUser);
+router.get("/users/update/:id", renderUpdateUser);
+router.post("/users/update/:id", updateUserValidate, updateUser);
+router.get("/users/first", renderFindFirstUser);
+router.post("/users/first", findFirstUser);
+router.get("/users/many", renderFindManyUsers);
+router.post("/users/many", findManyUser);
+router.get("/users/unique", renderFindUniqueUser);
+router.post("/users/unique", findUniqueUser);
 
-//property
-router.post("/createproperty", createProperty);
-router.post("/createmanyproperties", createManyProperties);
-router.post("/updateproperty/:id", updateProperty);
-router.post("/updatemanyproperties", updateManyProperties);
-router.post("/findfirstproperty", findFirstProperty);
-router.post("/findmanyproperties", findManyProperties);
-router.post("/finduniqueproperty", findUniqueProperty);
+// Property Routes
+router.get("/properties/create", renderCreateProperty);
+router.post("/properties/create", createPropertyValidate, createProperty);
+router.get("/properties/update/:id", renderUpdateProperty);
+router.post("/properties/update/:id", updatePropertyValidate, updateProperty);
+router.get("/properties/first", renderFindFirstProperty);
+router.post("/properties/first", findFirstProperty);
+router.get("/properties/many", renderFindManyProperties);
+router.post("/properties/many", findManyProperties);
+router.get("/properties/unique", renderFindUniqueProperty);
+router.post("/properties/unique", findUniqueProperty);
 
-//post
-router.post("/createpost", createPost);
-router.post("/createmanyposts", createManyPosts);
-router.post("/updatepost/:id", updatePost);
-router.post("/updatemanyposts", updateManyPosts);
-router.post("/findfirstpost", findFirstPost);
-router.post("/findmanyposts", findManyPosts);
-router.post("/finduniquepost", findUniquePost);
+// Post Routes
+router.get("/posts/create", renderCreatePost);
+router.post("/posts/create", createPostValidate, createPost);
+router.get("/posts/update/:id", renderUpdatePost);
+router.post("/posts/update/:id", updatePostValidate, updatePost);
+router.get("/posts/first", renderFindFirstPost);
+router.post("/posts/first", findFirstPost);
+router.get("/posts/many", renderFindManyPosts);
+router.post("/posts/many", findManyPosts);
+router.get("/posts/unique", renderFindUniquePost);
+router.post("/posts/unique", findUniquePost);
 
-//rating
-router.post("/createrating", createRating);
-router.post("/updaterating/:id", updateRating);
-router.delete("/deleterating/:id", deleteRating);
+// Rating Routes
+router.get("/ratings/create", renderCreateRating);
+router.post("/ratings/create", createRatingValidate, createRating);
+router.get("/ratings/update/:id", renderUpdateRating);
+router.post("/ratings/update/:id", updateRatingValidate, updateRating);
+router.post("/ratings/delete/:id", deleteRating);
 
-//rules
-router.post("/createrule", createRule);
-router.post("/updaterule/:id", updateRule);
-router.delete("/deleterule/:id", deleteRule);
+// Rule Routes
+router.get("/rules/create", renderCreateRule);
+router.post("/rules/create", createRuleValidate, createRule);
+router.get("/rules/update/:id", renderUpdateRule);
+router.post("/rules/update/:id", updateRuleValidate, updateRule);
+router.post("/rules/delete/:id", deleteRule);
+
 export default router;

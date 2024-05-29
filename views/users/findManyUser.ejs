@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Find Many Users</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <h1>Users</h1>
+    <ul>
+      <% users.forEach(user => { %>
+      <li>
+        <%= user.username %>
+        <a href="/users/update/<%= user.id %>">Update</a>
+        <form
+          action="/users/delete/<%= user.id %>"
+          method="post"
+          style="display: inline"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+      <% }) %>
+    </ul>
+    <a href="/users/create">Create New User</a>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

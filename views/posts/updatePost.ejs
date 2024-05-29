@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Update Post</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <h1>Update Post</h1>
+    <form action="/updatepost/<%= post.id %>" method="post">
+      <label for="title">Title:</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= post.title %>"
+        required
+      />
+      <label for="content">Content:</label>
+      <textarea id="content" name="content" required>
+<%= post.content %></textarea
+      >
+      <button type="submit">Update</button>
+    </form>
+    <a href="/posts">Back to List</a>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

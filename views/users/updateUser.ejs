@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Update User</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <h1>Update User</h1>
+    <form action="/updateuser/<%= user.id %>" method="post">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value="<%= user.username %>"
+        required
+      />
+      <label for="age">Age:</label>
+      <input
+        type="number"
+        id="age"
+        name="age"
+        value="<%= user.age %>"
+        required
+      />
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="<%= user.email %>"
+        required
+      />
+      <label for="contact">Contact:</label>
+      <input
+        type="text"
+        id="contact"
+        name="contact"
+        value="<%= user.contact %>"
+        required
+      />
+      <label for="role">Role:</label>
+      <input
+        type="text"
+        id="role"
+        name="role"
+        value="<%= user.role %>"
+        required
+      />
+      <button type="submit">Update</button>
+    </form>
+    <a href="/users">Back to List</a>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

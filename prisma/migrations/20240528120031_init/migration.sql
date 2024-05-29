@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `users` MODIFY `role` ENUM('BUYER', 'SELLER') NULL DEFAULT 'BUYER';

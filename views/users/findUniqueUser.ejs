@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Find Unique User</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <h1>Unique User</h1>
+    <p>Username: <%= user.username %></p>
+    <p>Age: <%= user.age %></p>
+    <p>Email: <%= user.email %></p>
+    <p>Contact: <%= user.contact %></p>
+    <p>Role: <%= user.role %></p>
+    <a href="/users">Back to List</a>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
