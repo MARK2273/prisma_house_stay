@@ -8,16 +8,26 @@ const prisma = new PrismaClient();
 // Create a property
 export const createProperty = async (req: Request, res: Response) => {
   try {
+    const {
+      floor,
+      bedroom,
+      kitchen,
+      living_room,
+      bathroom,
+      furnished,
+      address,
+      user_id,
+    } = req.body;
     const result = await prisma.property.create({
       data: {
-        floor: Number(req.body.floor),
-        bedroom: Number(req.body.bedroom),
-        kitchen: Number(req.body.kitchen),
-        living_room: Number(req.body.living_room),
-        bathroom: Number(req.body.bathroom),
-        furnished: Boolean(req.body.furnished),
-        address: req.body.address,
-        user_id: Number(req.body.user_id),
+        floor: Number(floor),
+        bedroom: Number(bedroom),
+        kitchen: Number(kitchen),
+        living_room: Number(living_room),
+        bathroom: Number(bathroom),
+        furnished: Boolean(furnished),
+        address: address,
+        user_id: Number(user_id),
       },
     });
     console.log(result);
@@ -77,6 +87,16 @@ export const createProperty = async (req: Request, res: Response) => {
 // Update a property
 export const updateProperty = async (req: Request, res: Response) => {
   try {
+    const {
+      floor,
+      bedroom,
+      kitchen,
+      living_room,
+      bathroom,
+      furnished,
+      address,
+      user_id,
+    } = req.body;
     const validId = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id),
@@ -86,14 +106,14 @@ export const updateProperty = async (req: Request, res: Response) => {
       await prisma.property.update({
         where: { id: Number(req.params.id) },
         data: {
-          floor: Number(req.body.floor),
-          bedroom: Number(req.body.bedroom),
-          kitchen: Number(req.body.kitchen),
-          living_room: Number(req.body.living_room),
-          bathroom: Number(req.body.bathroom),
-          furnished: Boolean(req.body.furnished),
-          address: req.body.address,
-          user_id: Number(req.body.user_id),
+          floor: Number(floor),
+          bedroom: Number(bedroom),
+          kitchen: Number(kitchen),
+          living_room: Number(living_room),
+          bathroom: Number(bathroom),
+          furnished: Boolean(furnished),
+          address: address,
+          user_id: Number(user_id),
         },
       });
       res.send("Property updated successfully");

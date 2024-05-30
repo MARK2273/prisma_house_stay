@@ -7,10 +7,10 @@ const prisma = new PrismaClient();
 // Create a rule
 export const createRule = async (req: Request, res: Response) => {
   try {
-    const ruleData: ruleT = req.body;
+    const { rule, property_id }: ruleT = req.body;
 
     await prisma.rules.create({
-      data: ruleData,
+      data: { rule: rule, property_id: Number(property_id) },
     });
     res.send("Rule inserted successfully");
   } catch (err: any) {
@@ -26,6 +26,8 @@ export const createRule = async (req: Request, res: Response) => {
 // Update a rule
 export const updateRule = async (req: Request, res: Response) => {
   try {
+    const { rule, property_id }: ruleT = req.body;
+
     const validId = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id),
@@ -34,7 +36,7 @@ export const updateRule = async (req: Request, res: Response) => {
     if (validId !== null) {
       await prisma.rules.update({
         where: { id: Number(req.params.id) },
-        data: req.body,
+        data: { rule: rule, property_id: Number(property_id) },
       });
       res.send("Rule updated successfully");
     } else {

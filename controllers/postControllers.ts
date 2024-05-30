@@ -8,13 +8,14 @@ const prisma = new PrismaClient();
 // Create a post
 export const createPost = async (req: Request, res: Response) => {
   try {
+    const { property_id, title, price, description, capacity } = req.body;
     await prisma.post.create({
       data: {
-        property_id: Number(req.body.property_id),
-        title: req.body.title,
-        price: Number(req.body.price),
-        description: req.body.description,
-        capacity: Number(req.body.capacity),
+        property_id: Number(property_id),
+        title: title,
+        price: Number(price),
+        description: description,
+        capacity: Number(capacity),
       },
     });
     res.send("Post inserted successfully");
@@ -66,6 +67,8 @@ export const createPost = async (req: Request, res: Response) => {
 // Update a post
 export const updatePost = async (req: Request, res: Response) => {
   try {
+    const { property_id, title, price, description, capacity } = req.body;
+
     const validId = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id),
@@ -75,11 +78,11 @@ export const updatePost = async (req: Request, res: Response) => {
       await prisma.post.update({
         where: { id: Number(req.params.id) },
         data: {
-          property_id: Number(req.body.property_id),
-          title: req.body.title,
-          price: Number(req.body.price),
-          description: req.body.description,
-          capacity: Number(req.body.capacity),
+          property_id: Number(property_id),
+          title: title,
+          price: Number(price),
+          description: description,
+          capacity: Number(capacity),
         },
       });
       res.send("Post updated successfully");

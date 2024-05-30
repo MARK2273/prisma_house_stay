@@ -5,13 +5,14 @@ const prisma = new PrismaClient();
 
 export const createUser = async (req: Request, res: Response) => {
   try {
+    const { username, age, email, contact, role } = req.body;
     await prisma.user.create({
       data: {
-        username: req.body.username,
-        age: Number(req.body.age),
-        email: req.body.email,
-        contact: req.body.contact,
-        role: req.body.role,
+        username: username,
+        age: Number(age),
+        email: email,
+        contact: contact,
+        role: role,
       },
     });
     res.send("User inserted successfully");
@@ -34,6 +35,8 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
+    const { username, age, email, contact, role } = req.body;
+
     const validId = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id),
@@ -43,11 +46,11 @@ export const updateUser = async (req: Request, res: Response) => {
       await prisma.user.update({
         where: { id: Number(req.params.id) },
         data: {
-          username: req.body.username,
-          age: Number(req.body.age),
-          email: req.body.email,
-          contact: req.body.contact,
-          role: req.body.role,
+          username: username,
+          age: Number(age),
+          email: email,
+          contact: contact,
+          role: role,
         },
       });
       res.send("User updated successfully");
@@ -115,21 +118,23 @@ export const findUniqueUser = async (req: Request, res: Response) => {
 
 export const UserUpsert = async (req: Request, res: Response) => {
   try {
+    const { username, age, email, contact, role } = req.body;
+
     await prisma.user.upsert({
       where: { id: Number(req.params.id) },
       update: {
-        username: req.body.username,
-        age: Number(req.body.age),
-        email: req.body.email,
-        contact: req.body.contact,
-        role: req.body.role,
+        username: username,
+        age: Number(age),
+        email: email,
+        contact: contact,
+        role: role,
       },
       create: {
-        username: req.body.username,
-        age: Number(req.body.age),
-        email: req.body.email,
-        contact: req.body.contact,
-        role: req.body.role,
+        username: username,
+        age: Number(age),
+        email: email,
+        contact: contact,
+        role: role,
       },
     });
     res.send("User updated successfully");

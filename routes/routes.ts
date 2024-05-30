@@ -35,7 +35,6 @@ import {
   updateRating,
   deleteRating,
   findManyRatings,
-  userRatings,
 } from "../controllers/ratingControllers";
 
 import {
@@ -108,9 +107,8 @@ router.get("/findmanyposts", findManyPosts);
 //rating
 router.post("/createrating", createRatingValidate, createRating);
 router.post("/updaterating/:id", updateRatingValidate, updateRating);
-router.post("/findmanyratings", findManyRatings);
+router.get("/findmanyratings/:id", findManyRatings);
 router.post("/deleterating/:id", deleteRating);
-router.get("/userratings/:id", userRatings);
 
 //rules
 router.post("/createrule", createRuleValidate, createRule);
