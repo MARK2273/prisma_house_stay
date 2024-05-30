@@ -1,0 +1,503 @@
+{
+	"info": {
+		"_postman_id": "6b16ef2d-730e-4aec-bc6b-25aa12bd0eaa",
+		"name": "home_stay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35310997"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "ayush",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "ayush@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "contact",
+							"value": "8888888888",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "SELLER",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/createuser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"createuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "Ayush",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "ayush1@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "contact",
+							"value": "8888888888",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "BUYER",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/updateuser/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"updateuser",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByUsername",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/findfirstuser/ayush",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"findfirstuser",
+						"ayush"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/findmanyuser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"findmanyuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findUniqueEmail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/finduniqueuser/ayush1@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"finduniqueuser",
+						"ayush1@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProperty",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "floor",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "bedroom",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "kitchen",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "living_room",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "bathroom",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "furnished",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "ahmedabad, gujarat",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/createproperty",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"createproperty"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProperty",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "floor",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "bedroom",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "kitchen",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "living_room",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "bathroom",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "furnished",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "ahmedabad, gujarat",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/updateproperty/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"updateproperty",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findPropertyByFloor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/findfirstproperty?floor=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"findfirstproperty"
+					],
+					"query": [
+						{
+							"key": "floor",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findManyProperty",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/findmanyproperties?floor=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"findmanyproperties"
+					],
+					"query": [
+						{
+							"key": "floor",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "property_id",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "New Home",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "10000",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Just for trial",
+							"type": "text"
+						},
+						{
+							"key": "capacity",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/createpost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"createpost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "property_id",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "New Home1",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "10000",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Just for trial",
+							"type": "text"
+						},
+						{
+							"key": "capacity",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/updatepost/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"updatepost",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPostByTitle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/findfirstpost?title=New Home1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"findfirstpost"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "New Home1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findManyPostByPrice",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:3000/findmanyposts?price=10000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"findmanyposts"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
