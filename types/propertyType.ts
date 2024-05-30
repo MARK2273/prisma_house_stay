@@ -6,4 +6,5 @@ export interface propertyT {
   bathroom: number;
   furnished: boolean;
   address: string;
+  user_id : number
 }

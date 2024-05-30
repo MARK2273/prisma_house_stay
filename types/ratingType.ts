@@ -6,5 +6,4 @@ export interface ratingT {
   communication_rating: number;
   location_rating: number;
   value_rating: number;
-  postId: number;
 }

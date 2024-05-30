@@ -18,50 +18,65 @@ export const createRule = async (req: Request, res: Response) => {
   }
 };
 
+// {
+//   "rule": "No smoking inside the property.",
+//   "propertyId": 1 // Replace with the actual propertyId you want to associate with this rule
+// }
+
 // Update a rule
 export const updateRule = async (req: Request, res: Response) => {
   try {
-    const validRule = await prisma.rules.findFirst({
+    const validId = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id),
       },
     });
-    if (validRule !== null) {
+    if (validId !== null) {
       await prisma.rules.update({
         where: { id: Number(req.params.id) },
         data: req.body,
       });
       res.send("Rule updated successfully");
     } else {
-      res.send("Rule Not Found!!!");
+      res.send("Data Not Found!!!");
     }
   } catch (err: any) {
     res.status(500).send("Something went wrong: " + err.message);
   }
 };
+
+// {
+//   "rule": "No loud music after 10 PM.",
+//   "propertyId": 2 // Replace with the actual propertyId you want to associate with this rule
+// }
 
 // Delete a rule
 export const deleteRule = async (req: Request, res: Response) => {
   try {
-    const validRule = await prisma.rules.findFirst({
+    const validId = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id),
       },
     });
-    if (validRule !== null) {
-      await prisma.rules.delete({
+    if (validId !== null) {
+      await prisma.rules.update({
         where: { id: Number(req.params.id) },
+        data: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
       });
       res.send("Rule deleted successfully");
     } else {
-      res.send("Rule Not Found!!!");
+      res.send("Data Not Found!!!");
     }
   } catch (err: any) {
     res.status(500).send("Something went wrong: " + err.message);
   }
 };
 
-// Find many rules
+//Find Many Rules
+
 export const findManyRules = async (req: Request, res: Response) => {
   const { where } = req.body;
   if (!where) {
@@ -71,21 +86,6 @@ export const findManyRules = async (req: Request, res: Response) => {
   try {
     const rules = await prisma.rules.findMany({ where });
     res.json(rules);
-  } catch (err: any) {
-    res.status(500).send("Something went wrong: " + err.message);
-  }
-};
-
-export const renderCreateRule = (req: Request, res: Response) => {
-  res.render("create_rule", { title: "Create Rule" });
-};
-
-// Render the update rule form
-export const renderUpdateRule = async (req: Request, res: Response) => {
-  const ruleId = Number(req.params.id);
-  try {
-    const rule = await prisma.rules.findUnique({ where: { id: ruleId } });
-    res.render("update_rule", { title: "Update Rule", rule });
   } catch (err: any) {
     res.status(500).send("Something went wrong: " + err.message);
   }

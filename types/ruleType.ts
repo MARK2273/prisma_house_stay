@@ -1,4 +1,4 @@
 export interface ruleT {
   rule: string;
-  propertyId: number;
+  property_id: number;
 }

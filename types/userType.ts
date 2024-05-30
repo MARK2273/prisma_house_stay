@@ -1,7 +1,8 @@
 export interface userT {
   username: string;
-  age:number;
+  age: number;
   email: string;
   contact: string;
   role?: string;
-}
+
+} 

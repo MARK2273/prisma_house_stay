@@ -1,49 +1,33 @@
 import express from "express";
 import {
   createUser,
-  createManyUser,
+  // createManyUser,
   updateUser,
-  updateManyUser,
+  // updateManyUser,
   findFirstUser,
   findManyUser,
   findUniqueUser,
   UserUpsert,
-  renderCreateUser,
-  renderUpdateUser,
-  renderFindFirstUser,
-  renderFindManyUsers,
-  renderFindUniqueUser,
 } from "../controllers/userControllers";
 
 import {
   createProperty,
-  createManyProperties,
+  // createManyProperties,
   updateProperty,
-  updateManyProperties,
+  // updateManyProperties,
   findFirstProperty,
   findManyProperties,
-  findUniqueProperty,
-  deleteProperty,
-  renderCreateProperty,
-  renderUpdateProperty,
-  renderFindFirstProperty,
-  renderFindManyProperties,
-  renderFindUniqueProperty,
+  // findUniqueProperty,
 } from "../controllers/propertyControllers";
 
 import {
   createPost,
-  createManyPosts,
+  // createManyPosts,
   updatePost,
-  updateManyPosts,
+  // updateManyPosts,
   findFirstPost,
   findManyPosts,
-  findUniquePost,
-  renderCreatePost,
-  renderUpdatePost,
-  renderFindFirstPost,
-  renderFindManyPosts,
-  renderFindUniquePost,
+  // findUniquePost,
 } from "../controllers/postControllers";
 
 import {
@@ -51,8 +35,7 @@ import {
   updateRating,
   deleteRating,
   findManyRatings,
-  renderCreateRating,
-  renderUpdateRating,
+  userRatings,
 } from "../controllers/ratingControllers";
 
 import {
@@ -60,8 +43,6 @@ import {
   updateRule,
   deleteRule,
   findManyRules,
-  renderCreateRule,
-  renderUpdateRule,
 } from "../controllers/ruleControllers";
 
 import {
@@ -87,54 +68,54 @@ import {
 
 const router = express();
 
-// User Routes
-router.get("/users/create", renderCreateUser);
-router.post("/users/create", createUserValidate, createUser);
-router.get("/users/update/:id", renderUpdateUser);
-router.post("/users/update/:id", updateUserValidate, updateUser);
-router.get("/users/first", renderFindFirstUser);
-router.post("/users/first", findFirstUser);
-router.get("/users/many", renderFindManyUsers);
-router.post("/users/many", findManyUser);
-router.get("/users/unique", renderFindUniqueUser);
-router.post("/users/unique", findUniqueUser);
+//user
+router.post("/createuser", createUserValidate, createUser);
+// router.post("/createmanyuser", createUserValidate, createManyUser);
+router.post("/updateuser/:id", updateUserValidate, updateUser);
+// router.post("/updatemanyuser", updateUserValidate, updateManyUser);
+router.get("/findfirstuser/:username", findFirstUser);
+router.get("/findmanyuser", findManyUser);
+router.get("/finduniqueuser/:email", findUniqueUser);
 
-// Property Routes
-router.get("/properties/create", renderCreateProperty);
-router.post("/properties/create", createPropertyValidate, createProperty);
-router.get("/properties/update/:id", renderUpdateProperty);
-router.post("/properties/update/:id", updatePropertyValidate, updateProperty);
-router.get("/properties/first", renderFindFirstProperty);
-router.post("/properties/first", findFirstProperty);
-router.get("/properties/many", renderFindManyProperties);
-router.post("/properties/many", findManyProperties);
-router.get("/properties/unique", renderFindUniqueProperty);
-router.post("/properties/unique", findUniqueProperty);
+router.post("/userupsert/:id", UserUpsert); // remaining
 
-// Post Routes
-router.get("/posts/create", renderCreatePost);
-router.post("/posts/create", createPostValidate, createPost);
-router.get("/posts/update/:id", renderUpdatePost);
-router.post("/posts/update/:id", updatePostValidate, updatePost);
-router.get("/posts/first", renderFindFirstPost);
-router.post("/posts/first", findFirstPost);
-router.get("/posts/many", renderFindManyPosts);
-router.post("/posts/many", findManyPosts);
-router.get("/posts/unique", renderFindUniquePost);
-router.post("/posts/unique", findUniquePost);
+//property
+router.post("/createproperty", createPropertyValidate, createProperty);
+// router.post(
+//   "/createmanyproperties",
+//   createPropertyValidate,
+//   createManyProperties
+// );
+router.post("/updateproperty/:id", updatePropertyValidate, updateProperty);
+// router.post(
+//   "/updatemanyproperties",
+//   updatePropertyValidate,
+//   updateManyProperties
+// );
+router.get("/findfirstproperty", findFirstProperty);
+router.get("/findmanyproperties", findManyProperties);
+// router.get("/finduniqueproperty", findUniqueProperty);
 
-// Rating Routes
-router.get("/ratings/create", renderCreateRating);
-router.post("/ratings/create", createRatingValidate, createRating);
-router.get("/ratings/update/:id", renderUpdateRating);
-router.post("/ratings/update/:id", updateRatingValidate, updateRating);
-router.post("/ratings/delete/:id", deleteRating);
+//post
+router.post("/createpost", createPostValidate, createPost);
+// router.post("/createmanyposts", createPostValidate, createManyPosts);
+router.post("/updatepost/:id", updatePostValidate, updatePost);
+// router.post("/updatemanyposts", updatePostValidate, updateManyPosts);
+router.get("/findfirstpost", findFirstPost);
+router.get("/findmanyposts", findManyPosts);
+// router.get("/finduniquepost", findUniquePost);
 
-// Rule Routes
-router.get("/rules/create", renderCreateRule);
-router.post("/rules/create", createRuleValidate, createRule);
-router.get("/rules/update/:id", renderUpdateRule);
-router.post("/rules/update/:id", updateRuleValidate, updateRule);
-router.post("/rules/delete/:id", deleteRule);
+//rating
+router.post("/createrating", createRatingValidate, createRating);
+router.post("/updaterating/:id", updateRatingValidate, updateRating);
+router.post("/findmanyratings", findManyRatings);
+router.post("/deleterating/:id", deleteRating);
+router.get("/userratings/:id", userRatings);
+
+//rules
+router.post("/createrule", createRuleValidate, createRule);
+router.post("/updaterule/:id", updateRuleValidate, updateRule);
+router.post("/findmanyrules", findManyRules);
+router.post("/deleterule/:id", deleteRule);
 
 export default router;

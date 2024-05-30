@@ -10,37 +10,28 @@ import { propertyT } from "../types/propertyType";
 import { ruleT } from "../types/ruleType";
 import { postT } from "../types/postType";
 import { ratingT } from "../types/ratingType";
+import { pivotRatingT } from "../types/pivotRating";
+import { pivotRatingdata } from "../seeders/pivotRating";
 const prisma = new PrismaClient();
 
 async function main(): Promise<void> {
-  userData.forEach(async (user: userT): Promise<void> => {
-    await prisma.user.create({
-      data: user,
-    });
+  await prisma.user.createMany({
+    data: userData,
   });
-
-  propertyData.forEach(async (property: propertyT): Promise<void> => {
-    await prisma.property.create({
-      data: property,
-    });
+  await prisma.property.createMany({
+    data: propertyData,
   });
-
-  ruleData.forEach(async (rule: ruleT): Promise<void> => {
-    await prisma.rules.create({
-      data: rule,
-    });
+  await prisma.rules.createMany({
+    data: ruleData,
   });
-
-  postData.forEach(async (post: postT): Promise<void> => {
-    await prisma.post.create({
-      data: post,
-    });
+  await prisma.post.createMany({
+    data: postData,
   });
-
-  ratingData.forEach(async (rating: ratingT): Promise<void> => {
-    await prisma.rating.create({
-      data: rating,
-    });
+  await prisma.rating.createMany({
+    data: ratingData,
+  });
+  await prisma.pivotRating.createMany({
+    data: pivotRatingdata,
   });
 }
 

@@ -25,8 +25,10 @@ model User {
   deleted_at DateTime?
   is_deleted Boolean   @default(false)
 
-  role   String   @default("BUYER")
-  rating Rating[]
+  property Property[]
+  role     String     @default("BUYER")
+
+  pivotRating pivotRating[]
 
   @@map("users")
 }
@@ -46,16 +48,21 @@ model Property {
   deleted_at DateTime?
   is_deleted Boolean   @default(false)
 
-  post Post?
   rule Rules[]
+
+  post Post?
+
+  User    User? @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  pivotRating pivotRating[]
 
   @@map("properties")
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
-  propery     Property @relation(fields: [propertyId], references: [id])
-  propertyId  Int      @unique
+  id Int @id @default(autoincrement())
+
   title       String
   price       Float
   description String
@@ -66,7 +73,8 @@ model Post {
   deleted_at DateTime?
   is_deleted Boolean   @default(false)
 
-  rating Rating[]
+  property    Property @relation(fields: [property_id], references: [id])
+  property_id Int      @unique
 
   @@index([title])
   @@map("posts")
@@ -87,9 +95,7 @@ model Rating {
   deleted_at DateTime?
   is_deleted Boolean   @default(false)
 
-  post   Post   @relation(fields: [postId], references: [id])
-  postId Int
-  user   User[]
+  pivotRating pivotRating?
 
   @@map("ratings")
 }
@@ -103,8 +109,21 @@ model Rules {
   deleted_at DateTime?
   is_deleted Boolean   @default(false)
 
-  property   Property @relation(fields: [propertyId], references: [id])
-  propertyId Int
+  property    Property @relation(fields: [property_id], references: [id])
+  property_id Int
 
   @@map("rules")
+}
+
+model pivotRating {
+  id Int @id @default(autoincrement())
+
+  rating    Rating @relation(fields: [rating_id], references: [id])
+  rating_id Int    @unique
+
+  property    Property @relation(fields: [property_id], references: [id])
+  property_id Int
+
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
 }

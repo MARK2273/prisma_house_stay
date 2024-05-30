@@ -1,5 +1,5 @@
 export interface postT {
-  propertyId: number;
+  property_id: number;
   title: string;
   price: number;
   description: string;

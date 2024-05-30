@@ -7,6 +7,7 @@ export const propertyData = [
     bathroom: 2,
     furnished: true,
     address: "Address 1",
+    user_id: 1,
   },
   {
     floor: 2,
@@ -16,7 +17,9 @@ export const propertyData = [
     bathroom: 2,
     furnished: true,
     address: "Address 2",
-  },{
+    user_id: 1,
+  },
+  {
     floor: 2,
     bedroom: 3,
     kitchen: 1,
@@ -24,7 +27,9 @@ export const propertyData = [
     bathroom: 2,
     furnished: true,
     address: "Address 3",
-  },{
+    user_id: 1,
+  },
+  {
     floor: 2,
     bedroom: 3,
     kitchen: 1,
@@ -32,7 +37,9 @@ export const propertyData = [
     bathroom: 2,
     furnished: true,
     address: "Address 4",
-  },{
+    user_id: 2,
+  },
+  {
     floor: 2,
     bedroom: 3,
     kitchen: 1,
@@ -40,5 +47,6 @@ export const propertyData = [
     bathroom: 2,
     furnished: true,
     address: "Address 5",
+    user_id: 2,
   },
 ];

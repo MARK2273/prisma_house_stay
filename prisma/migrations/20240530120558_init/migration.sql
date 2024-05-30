@@ -30,6 +30,7 @@ CREATE TABLE `properties` (
     `updated_at` DATETIME(3) NOT NULL,
     `deleted_at` DATETIME(3) NULL,
     `is_deleted` BOOLEAN NOT NULL DEFAULT false,
+    `user_id` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -37,7 +38,6 @@ CREATE TABLE `properties` (
 -- CreateTable
 CREATE TABLE `posts` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `propertyId` INTEGER NOT NULL,
     `title` VARCHAR(191) NOT NULL,
     `price` DOUBLE NOT NULL,
     `description` VARCHAR(191) NOT NULL,
@@ -46,8 +46,9 @@ CREATE TABLE `posts` (
     `updated_at` DATETIME(3) NOT NULL,
     `deleted_at` DATETIME(3) NULL,
     `is_deleted` BOOLEAN NOT NULL DEFAULT false,
+    `property_id` INTEGER NOT NULL,
 
-    UNIQUE INDEX `posts_propertyId_key`(`propertyId`),
+    UNIQUE INDEX `posts_property_id_key`(`property_id`),
     INDEX `posts_title_idx`(`title`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -66,7 +67,6 @@ CREATE TABLE `ratings` (
     `updated_at` DATETIME(3) NOT NULL,
     `deleted_at` DATETIME(3) NULL,
     `is_deleted` BOOLEAN NOT NULL DEFAULT false,
-    `postId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -79,31 +79,36 @@ CREATE TABLE `rules` (
     `updated_at` DATETIME(3) NOT NULL,
     `deleted_at` DATETIME(3) NULL,
     `is_deleted` BOOLEAN NOT NULL DEFAULT false,
-    `propertyId` INTEGER NOT NULL,
+    `property_id` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_RatingToUser` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
+CREATE TABLE `pivotRating` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `rating_id` INTEGER NOT NULL,
+    `property_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
 
-    UNIQUE INDEX `_RatingToUser_AB_unique`(`A`, `B`),
-    INDEX `_RatingToUser_B_index`(`B`)
+    UNIQUE INDEX `pivotRating_rating_id_key`(`rating_id`),
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `posts` ADD CONSTRAINT `posts_propertyId_fkey` FOREIGN KEY (`propertyId`) REFERENCES `properties`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `properties` ADD CONSTRAINT `properties_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ratings` ADD CONSTRAINT `ratings_postId_fkey` FOREIGN KEY (`postId`) REFERENCES `posts`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `posts` ADD CONSTRAINT `posts_property_id_fkey` FOREIGN KEY (`property_id`) REFERENCES `properties`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `rules` ADD CONSTRAINT `rules_propertyId_fkey` FOREIGN KEY (`propertyId`) REFERENCES `properties`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `rules` ADD CONSTRAINT `rules_property_id_fkey` FOREIGN KEY (`property_id`) REFERENCES `properties`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_RatingToUser` ADD CONSTRAINT `_RatingToUser_A_fkey` FOREIGN KEY (`A`) REFERENCES `ratings`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pivotRating` ADD CONSTRAINT `pivotRating_rating_id_fkey` FOREIGN KEY (`rating_id`) REFERENCES `ratings`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_RatingToUser` ADD CONSTRAINT `_RatingToUser_B_fkey` FOREIGN KEY (`B`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pivotRating` ADD CONSTRAINT `pivotRating_property_id_fkey` FOREIGN KEY (`property_id`) REFERENCES `properties`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `pivotRating` ADD CONSTRAINT `pivotRating_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
