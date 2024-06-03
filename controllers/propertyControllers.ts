@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import { propertyT } from "../types/propertyType";
 import { number } from "joi";
+import { setMaxIdleHTTPParsers } from "http";
+import { addAbortListener } from "events";
 
 const prisma = new PrismaClient();
 
@@ -242,3 +244,90 @@ export const findManyProperties = async (req: Request, res: Response) => {
 //     "address": "123 Main Street, City, Country"
 //   }
 // }
+
+export const getAllRulesAndPosts = async (req: Request, res: Response) => {
+  try {
+    const properties = await prisma.property.findMany({
+      include: {
+        rule: {
+          select: {
+            rule: true,
+          },
+        },
+        post: {
+          select: {
+            title: true,
+            price: true,
+            description: true,
+            capacity: true,
+          },
+        },
+        User: {
+          select: {
+            username: true,
+            email: true,
+            contact: true,
+          },
+        },
+      }, // Include the user who owns the property
+    });
+    res.json(properties);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const uniquePropertyDetail = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res
+        .status(400)
+        .send("Invalid 'property_id' in request parameters");
+    }
+
+    const property = await prisma.property.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        floor: true,
+        bedroom: true,
+        kitchen: true,
+        living_room: true,
+        bathroom: true,
+        furnished: true,
+        address: true,
+        rule: {
+          select: {
+            rule: true,
+          },
+        },
+        post: {
+          select: {
+            title: true,
+            price: true,
+            description: true,
+            capacity: true,
+          },
+        },
+        User: {
+          select: {
+            username: true,
+            email: true,
+            contact: true,
+          },
+        },
+      },
+    });
+
+    if (!property) {
+      return res.status(404).send("Data Not Found!!!");
+    }
+
+    res.json(property);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};

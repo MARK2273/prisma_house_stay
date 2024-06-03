@@ -17,6 +17,8 @@ import {
   // updateManyProperties,
   findFirstProperty,
   findManyProperties,
+  getAllRulesAndPosts,
+  uniquePropertyDetail,
   // findUniqueProperty,
 } from "../controllers/propertyControllers";
 
@@ -35,6 +37,7 @@ import {
   updateRating,
   deleteRating,
   findManyRatings,
+  averageRating,
 } from "../controllers/ratingControllers";
 
 import {
@@ -93,6 +96,9 @@ router.post("/updateproperty/:id", updatePropertyValidate, updateProperty);
 // );
 router.get("/findfirstproperty", findFirstProperty);
 router.get("/findmanyproperties", findManyProperties);
+router.get("/allPropertyDetail", getAllRulesAndPosts);
+router.get("/uniquepropertydetail/:id", uniquePropertyDetail);
+
 // router.get("/finduniqueproperty", findUniqueProperty);
 
 //post
@@ -107,8 +113,9 @@ router.get("/findmanyposts", findManyPosts);
 //rating
 router.post("/createrating", createRatingValidate, createRating);
 router.post("/updaterating/:id", updateRatingValidate, updateRating);
-router.get("/findmanyratings/:id", findManyRatings);
 router.post("/deleterating/:id", deleteRating);
+router.get("/findmanyratings/:id", findManyRatings);
+router.get("/avgrating/:id", averageRating);
 
 //rules
 router.post("/createrule", createRuleValidate, createRule);

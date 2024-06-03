@@ -155,3 +155,40 @@ export const findManyRatings = async (req: Request, res: Response) => {
     res.status(500).send("Something went wrong: " + err.message);
   }
 };
+
+export const averageRating = async (req: Request, res: Response) => {
+  try {
+    const propertyId = Number(req.params.id);
+
+    // Find the rating to ensure it exists
+    const validRating = await prisma.rating.findUnique({
+      where: {
+        id: propertyId,
+      },
+    });
+
+    if (validRating !== null) {
+      // Soft delete the rating
+      const averageRatings = await prisma.rating.aggregate({
+        _avg: {
+          cleanliness_rating: true,
+          accuracy_rating: true,
+          check_in_rating: true,
+          communication_rating: true,
+          location_rating: true,
+          value_rating: true,
+        },
+        where: {
+          pivotRating: {
+            property_id: Number(propertyId),
+          },
+        },
+      });
+      res.json(averageRatings);
+    } else {
+      res.send("Rating not found");
+    }
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
